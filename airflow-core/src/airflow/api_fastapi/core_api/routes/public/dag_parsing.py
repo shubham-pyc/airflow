@@ -119,11 +119,11 @@ def reserialize_dags(
         else:
             bundles_to_process = all_bundle_names
 
-        file_locations = session.scalars(
-            select(DagModel.fileloc).where(DagModel.bundle_name.in_(list(bundles_to_process)))
-        )
+        # file_locations = session.scalars(
+        #     select(DagModel.fileloc).where(DagModel.bundle_name.in_(list(bundles_to_process)))
+        # )
         # Process each bundle
-        parsing_requests = [DagPriorityParsingRequest(fileloc=fileloc) for fileloc in file_locations]
+        parsing_requests = [DagPriorityParsingRequest(bundle_name=bundle_name) for bundle_name in bundles_to_process]
 
         session.add_all(parsing_requests)
         return ReserializeResponse(
