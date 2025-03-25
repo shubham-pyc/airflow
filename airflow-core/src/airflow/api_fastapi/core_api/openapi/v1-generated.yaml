@@ -8555,6 +8555,12 @@ components:
             format: date-time
           - type: 'null'
           title: Last Expired
+        bundle_name:
+          type: string
+          title: Bundle Name
+        relative_fileloc:
+          type: string
+          title: Relative Fileloc
         fileloc:
           type: string
           title: Fileloc
@@ -8710,6 +8716,8 @@ components:
       - is_active
       - last_parsed_time
       - last_expired
+      - bundle_name
+      - relative_fileloc
       - fileloc
       - description
       - timetable_summary
@@ -8779,6 +8787,12 @@ components:
             format: date-time
           - type: 'null'
           title: Last Expired
+        bundle_name:
+          type: string
+          title: Bundle Name
+        relative_fileloc:
+          type: string
+          title: Relative Fileloc
         fileloc:
           type: string
           title: Fileloc
@@ -8861,6 +8875,8 @@ components:
       - is_active
       - last_parsed_time
       - last_expired
+      - bundle_name
+      - relative_fileloc
       - fileloc
       - description
       - timetable_summary
@@ -9289,6 +9305,12 @@ components:
             format: date-time
           - type: 'null'
           title: Last Expired
+        bundle_name:
+          type: string
+          title: Bundle Name
+        relative_fileloc:
+          type: string
+          title: Relative Fileloc
         fileloc:
           type: string
           title: Fileloc
@@ -9381,6 +9403,8 @@ components:
       - is_active
       - last_parsed_time
       - last_expired
+      - bundle_name
+      - relative_fileloc
       - fileloc
       - description
       - timetable_summary
