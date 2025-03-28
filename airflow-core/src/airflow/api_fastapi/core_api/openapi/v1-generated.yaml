@@ -44,6 +44,7 @@ paths:
             application/json:
               schema:
                 type: object
+                additionalProperties: true
                 title: Response Next Run Assets
         '422':
           description: Validation Error
@@ -7507,7 +7508,8 @@ components:
           title: Group
         extra:
           anyOf:
-          - type: object
+          - additionalProperties: true
+            type: object
           - type: 'null'
           title: Extra
         source_task_id:
@@ -7562,7 +7564,8 @@ components:
           title: Group
         extra:
           anyOf:
-          - type: object
+          - additionalProperties: true
+            type: object
           - type: 'null'
           title: Extra
         created_at:
@@ -7635,6 +7638,7 @@ components:
           title: Run Backwards
           default: false
         dag_run_conf:
+          additionalProperties: true
           type: object
           title: Dag Run Conf
           default: {}
@@ -7670,6 +7674,7 @@ components:
           format: date-time
           title: To Date
         dag_run_conf:
+          additionalProperties: true
           type: object
           title: Dag Run Conf
         is_paused:
@@ -7814,6 +7819,7 @@ components:
           default: []
         errors:
           items:
+            additionalProperties: true
             type: object
           type: array
           title: Errors
@@ -8251,6 +8257,7 @@ components:
           type: string
           title: Test Connection
         state_color_mapping:
+          additionalProperties: true
           type: object
           title: State Color Mapping
       type: object
@@ -8410,7 +8417,8 @@ components:
           - type: 'null'
         extra_fields:
           anyOf:
-          - type: object
+          - additionalProperties: true
+            type: object
           - type: 'null'
           title: Extra Fields
       type: object
@@ -8505,6 +8513,7 @@ components:
           type: integer
           title: Asset Id
         extra:
+          additionalProperties: true
           type: object
           title: Extra
       additionalProperties: false
@@ -8641,7 +8650,8 @@ components:
           title: Dag Run Timeout
         asset_expression:
           anyOf:
-          - type: object
+          - additionalProperties: true
+            type: object
           - type: 'null'
           title: Asset Expression
         doc_md:
@@ -8668,7 +8678,8 @@ components:
           title: Is Paused Upon Creation
         params:
           anyOf:
-          - type: object
+          - additionalProperties: true
+            type: object
           - type: 'null'
           title: Params
         render_template_as_native_obj:
@@ -9010,6 +9021,7 @@ components:
         triggered_by:
           $ref: '#/components/schemas/DagRunTriggeredByType'
         conf:
+          additionalProperties: true
           type: object
           title: Conf
         note:
@@ -9382,7 +9394,8 @@ components:
           title: Owners
         asset_expression:
           anyOf:
-          - type: object
+          - additionalProperties: true
+            type: object
           - type: 'null'
           title: Asset Expression
         latest_dag_runs:
@@ -10003,7 +10016,8 @@ components:
         detail:
           anyOf:
           - type: string
-          - type: object
+          - additionalProperties: true
+            type: object
           title: Detail
       type: object
       required:
@@ -11002,6 +11016,7 @@ components:
           - type: 'null'
           title: Rendered Map Index
         rendered_fields:
+          additionalProperties: true
           type: object
           title: Rendered Fields
         trigger:
@@ -11423,12 +11438,14 @@ components:
           title: Operator Name
         params:
           anyOf:
-          - type: object
+          - additionalProperties: true
+            type: object
           - type: 'null'
           title: Params
         class_ref:
           anyOf:
-          - type: object
+          - additionalProperties: true
+            type: object
           - type: 'null'
           title: Class Ref
         is_mapped:
@@ -11528,6 +11545,7 @@ components:
           - type: 'null'
           title: Run After
         conf:
+          additionalProperties: true
           type: object
           title: Conf
         note:
