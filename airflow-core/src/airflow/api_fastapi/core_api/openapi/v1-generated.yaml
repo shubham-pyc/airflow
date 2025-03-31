@@ -9933,11 +9933,6 @@ components:
             format: date-time
           - type: 'null'
           title: Data Interval End
-        version_number:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Version Number
         note:
           anyOf:
           - type: string
@@ -9960,7 +9955,6 @@ components:
       - logical_date
       - data_interval_start
       - data_interval_end
-      - version_number
       - note
       - task_instances
       title: GridDAGRunwithTIs
@@ -9972,9 +9966,12 @@ components:
             $ref: '#/components/schemas/GridDAGRunwithTIs'
           type: array
           title: Dag Runs
+        structure:
+          $ref: '#/components/schemas/StructureDataResponse'
       type: object
       required:
       - dag_runs
+      - structure
       title: GridResponse
       description: Response model for the Grid UI.
     GridTaskInstanceSummary:
