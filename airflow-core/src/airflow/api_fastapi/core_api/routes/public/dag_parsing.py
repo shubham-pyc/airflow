@@ -126,6 +126,7 @@ def reserialize_dags(
         parsing_requests = [DagPriorityParsingRequest(fileloc=fileloc) for fileloc in file_locations]
 
         session.add_all(parsing_requests)
+        session.commit()
         return ReserializeResponse(
             message="DAG bundles reserialized successfully", processed_bundles=list(bundles_to_process)
         )
