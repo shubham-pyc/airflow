@@ -29,7 +29,7 @@ def get_provider_info():
         "state": "ready",
         "source-date-epoch": 1742480263,
         "versions": [
-            "3.10.4b1",
+            "3.10.4",
             "3.10.3",
             "3.10.2",
             "3.10.0",
@@ -298,7 +298,7 @@ def get_provider_info():
                 },
             },
         },
-        "dependencies": ["apache-airflow>=2.9.0", "celery[redis]>=5.4.0,<6", "flower>=1.0.0"],
+        "dependencies": ["apache-airflow>=2.9.0", "celery[redis]>=5.5.0,<6", "flower>=1.0.0"],
         "optional-dependencies": {"cncf.kubernetes": ["apache-airflow-providers-cncf-kubernetes>=7.4.0"]},
         "devel-dependencies": [],
     }

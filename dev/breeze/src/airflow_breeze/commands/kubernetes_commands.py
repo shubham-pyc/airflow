@@ -23,6 +23,7 @@ import shutil
 import sys
 import tempfile
 from copy import deepcopy
+from itertools import chain
 from pathlib import Path
 from shlex import quote
 
@@ -65,6 +66,7 @@ from airflow_breeze.utils.kubernetes_utils import (
     get_kind_cluster_name,
     get_kubeconfig_file,
     get_kubectl_cluster_name,
+    get_kubernetes_port_numbers,
     get_kubernetes_python_combos,
     make_sure_kubernetes_tools_are_installed,
     print_cluster_urls,
@@ -993,6 +995,7 @@ def _deploy_helm_chart(
     multi_namespace_mode: bool = False,
 ) -> RunCommandResult:
     cluster_name = get_kubectl_cluster_name(python=python, kubernetes_version=kubernetes_version)
+    _, api_server_port = get_kubernetes_port_numbers(python=python, kubernetes_version=kubernetes_version)
     action = "Deploying" if not upgrade else "Upgrading"
     get_console(output=output).print(f"[info]{action} {cluster_name} with airflow Helm Chart.")
     with tempfile.TemporaryDirectory(prefix="chart_") as tmp_dir:
@@ -1034,6 +1037,8 @@ def _deploy_helm_chart(
             "config.api_auth.jwt_secret=foo",
             "--set",
             "config.core.auth_manager=airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager",
+            "--set",
+            f"config.api.base_url=http://localhost:{api_server_port}",
         ]
         if multi_namespace_mode:
             helm_command.extend(["--set", "multiNamespaceMode=true"])
@@ -1470,8 +1475,10 @@ def _run_tests(
             f"[info]You can deploy airflow with {executor} by running:[/]\nbreeze k8s configure-cluster\nbreeze k8s deploy-airflow --multi-namespace-mode --executor {executor}"
         )
         return 1, f"Tests {kubectl_cluster_name}"
+    pytest_cmd = ["python3", "-m", "pytest"]
     the_tests: list[str] = ["kubernetes_tests/"]
-    command_to_run = " ".join([quote(arg) for arg in ["python3", "-m", "pytest", *the_tests, *test_args]])
+    ordered_unique_args = dict.fromkeys(chain(pytest_cmd, the_tests, test_args))
+    command_to_run = " ".join(quote(arg) for arg in ordered_unique_args)
     get_console(output).print(f"[info] Command to run:[/] {command_to_run}")
     result = run_command(
         [shell_binary, *extra_shell_args, "-c", command_to_run],

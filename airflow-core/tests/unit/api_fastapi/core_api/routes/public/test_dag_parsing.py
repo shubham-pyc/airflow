@@ -58,19 +58,22 @@ class TestDagParsingEndpoint:
         parse_and_sync_to_db(EXAMPLE_DAG_FILE)
         dagbag = DagBag(read_dags_from_db=True)
         test_dag = dagbag.get_dag(TEST_DAG_ID)
-
         url = f"{API_PREFIX}/{url_safe_serializer.dumps(test_dag.fileloc)}"
         response = test_client.put(url, headers={"Accept": "application/json"})
         assert response.status_code == 201
         parsing_requests = session.scalars(select(DagPriorityParsingRequest)).all()
-        assert parsing_requests[0].fileloc == test_dag.fileloc
+        assert len(parsing_requests) == 1
+        assert parsing_requests[0].bundle_name == test_dag.get_bundle_name()
+        assert parsing_requests[0].relative_fileloc == test_dag.relative_fileloc
         _check_last_log(session, dag_id=None, event="reparse_dag_file", logical_date=None)
 
         # Duplicate file parsing request
         response = test_client.put(url, headers={"Accept": "application/json"})
         assert response.status_code == 409
         parsing_requests = session.scalars(select(DagPriorityParsingRequest)).all()
-        assert parsing_requests[0].fileloc == test_dag.fileloc
+        assert len(parsing_requests) == 1
+        assert parsing_requests[0].bundle_name == test_dag.get_bundle_name()
+        assert parsing_requests[0].relative_fileloc == test_dag.relative_fileloc
         _check_last_log(session, dag_id=None, event="reparse_dag_file", logical_date=None)
 
     def test_should_respond_401(self, unauthenticated_test_client):
